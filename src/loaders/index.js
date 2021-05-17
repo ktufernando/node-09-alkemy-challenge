@@ -7,6 +7,8 @@ module.exports = async () => {
 
   try {
     await sequelize.authenticate();
+    //sequelize.sync({ alter: true });
+    sequelize.sync({force: false});
     logger.info('DB loaded and connected');
     
     const server = new ExpressServer();

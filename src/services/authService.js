@@ -14,7 +14,7 @@ const login = async(email, password) => {
         const user = await userService.findByEmail(email);
 
         if(!user){
-            throw new AppError('Authentication failed! Email / password does not correct.', 401);
+            throw new AppError('Authentication failed! Email / password does not correct. #1', 401);
         }
 
         //Validación de usaurio habilitado
@@ -25,7 +25,7 @@ const login = async(email, password) => {
         //Validación de password
         const validPassword = await bcrypt.compare(password, user.password);
         if(!validPassword) {
-            throw new AppError('Authentication failed! Email / password does not correct.', 401);
+            throw new AppError('Authentication failed! Email / password does not correct. #2', 401);
         }
 
         //Generar JWT

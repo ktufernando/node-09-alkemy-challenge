@@ -9,19 +9,20 @@ class UserRepository {
 
 
     async findAll(){
-        return await User.find();
+        return await User.findAll();
     }
 
-    async findAllWithPagination(filter, options){
+    /*async findAllWithPagination(filter, options){
         return await User.paginate(filter, options);
-    }
+    }*/
 
     async findById(id) {
-        return await User.findById(id);
+        return await User.findByPk(id);
     }
     
+    //FIXME Hacer query
     async findByEmail(email) {
-        return await User.findOne({email});
+        return await User.findOne({ where: { email } })
     }
 
     async save(user) {
@@ -30,11 +31,19 @@ class UserRepository {
     }
 
     async update(id, user){
-        return await User.findByIdAndUpdate(id, user, {new : true});
+        return await User.update(user, {
+            where: {
+              id
+            }
+          });
     }
 
     async remove(id) {
-        return await User.findByIdAndRemove(id);
+        return await User.destroy({
+            where: {
+                id
+            }
+        });
     }
 }
 
