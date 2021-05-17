@@ -29,7 +29,7 @@ const login = async(email, password) => {
         }
 
         //Generar JWT
-        const token = _encrypt(user._id);
+        const token = _encrypt(user.id);
 
         return {
             token,
@@ -95,12 +95,25 @@ const validRole = (user, ...roles) => {
     return true;
 }
 
+const register = async(email, password) => {
+
+    const user = {email, password};
+
+    await userService.save(user);
+
+    //TODO: Enviar un mail de confirmación de registro.
+
+    return "User registered. You can log in to use the API.";
+
+}
+
 _encrypt = (id) => {
     return jwt.sign({ id }, config.auth.secret, { expiresIn: config.auth.ttl });
 }
 
 module.exports = {
     login,
+    register,
     validToken,
     validRole
 }

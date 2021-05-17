@@ -13,6 +13,12 @@ const postLoginRequestValidations = [
     _passwordRequired,
     validationResult
 ]
+const postRegisterRequestValidations = [
+    _emailRequired,
+    _emailValid,
+    _passwordRequired,
+    validationResult
+]
 
 const validJWT = async (req, res, next) => {
     try {
@@ -39,6 +45,7 @@ const hasRole = (...roles) => {
 
 module.exports = {
     postLoginRequestValidations,
+    postRegisterRequestValidations,
     validJWT,
     hasRole
 }

@@ -49,8 +49,8 @@ const _idExist = check('id').custom(
 
 
 const postRequestValidations = [
-    //validJWT,
-    //hasRole(ADMIN_ROLE),
+    validJWT,
+    hasRole(ADMIN_ROLE),
     _nameRequired,
     _emailRequired,
     _emailValid,
@@ -61,8 +61,8 @@ const postRequestValidations = [
 ]
 
 const putRequestValidations = [
-    //validJWT,
-    //hasRole(ADMIN_ROLE),
+    validJWT,
+    hasRole(ADMIN_ROLE),
     _idRequied,
     _idIsNumeric,
     _idExist,
@@ -73,8 +73,8 @@ const putRequestValidations = [
 ]
 
 const deleteRequestValidations = [
-    //validJWT,
-    //hasRole(ADMIN_ROLE),
+    validJWT,
+    hasRole(ADMIN_ROLE),
     _idRequied,
     _idIsNumeric,
     _idExist,
@@ -82,7 +82,7 @@ const deleteRequestValidations = [
 ]
 
 const getAllRequestValidation = [
-    //validJWT
+    validJWT
 ]
 
 const getRequestValidation = [
