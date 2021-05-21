@@ -7,26 +7,6 @@ const {validationResult} = require('../commons');
 const { validJWT, hasRole } = require('../auth');
 
 const _nameRequired = check('name', 'Name required').not().isEmpty();
-const _emailRequired = check('email', 'Email required').not().isEmpty();
-const _emailValid = check('email', 'Email is invalid').isEmail();
-const _emailExist = check('email').custom(
-    async (email = '') => {
-        const userFound = await userService.findByEmail(email);
-        if(userFound) {
-            throw new AppError('Email already exist in DB', 400);
-        }
-    }
-);
-const _optionalEmailValid = check('email', 'Email is invalid').optional().isEmail();
-const _optionalEmailExist = check('email').optional().custom(
-    async (email = '') => {
-        const userFound = await userService.findByEmail(email);
-        if(userFound) {
-            throw new AppError('Email already exist in DB', 400);
-        }
-    }
-);
-const _passwordRequired = check('password', 'Password required').not().isEmpty();
 const _roleValid = check('role').optional().custom(
     async (role = '') => {
         if(!ROLES.includes(role)) {

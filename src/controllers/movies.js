@@ -1,5 +1,5 @@
 const express = require('express');
-const userService = require('../services/userService');
+const movieService = require('../services/movieService');
 const Success = require('../handlers/successHandler');
 const logger = require('../loaders/logger');
 
@@ -8,13 +8,15 @@ const logger = require('../loaders/logger');
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const getAllUsers = async (req, res, next) => {
+const getAllMovies = async (req, res, next) => {
     try {
 
         logger.info('Query: ' + JSON.stringify(req.query));
 
-        const users = await userService.findAll(req.query.filter, req.query.options);
-        res.json(new Success(users));
+        const {filter = '', options = ''} = req.query;
+
+        const movies = await movieService.findAll(filter, options);
+        res.json(new Success(movies));
         
     } catch (err) {
         next(err);
@@ -26,12 +28,12 @@ const getAllUsers = async (req, res, next) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const createUser = async (req, res, next) => {
+const createMovie = async (req, res, next) => {
     try {
-        let user = req.body;
-        user = await userService.save(user);
+        let m = req.body;
+        m = await movieService.save(m);
 
-        res.status(201).json(new Success(user));
+        res.status(201).json(new Success(m));
     } catch (err) {
         next(err);
     }
@@ -42,14 +44,14 @@ const createUser = async (req, res, next) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const updateUser = async (req, res, next) => {
+const updateMovie = async (req, res, next) => {
     try {
         const { id } = req.params;
-        let user = req.body;
+        let m = req.body;
 
-        const userUpdated = await userService.update(id, user);
+        const movieUpdated = await movieService.update(id, m);
 
-        res.json(new Success(userUpdated));
+        res.json(new Success(movieUpdated));
     } catch (err) {
         next(err);
     }
@@ -60,10 +62,10 @@ const updateUser = async (req, res, next) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const getUserById = async (req, res) => {
+const getMovieById = async (req, res) => {
     try {
-        const user = await userService.findById(req.params.id);
-        res.json(new Success(user));
+        const m = await movieService.findById(req.params.id);
+        res.json(new Success(m));
     } catch (err) {
         next(err);
     }
@@ -74,20 +76,20 @@ const getUserById = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const deleteUser = async (req, res, next) => {
+const deleteMovie = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await userService.remove(id);
-        res.json(new Success(user));
+        const m = await movieService.remove(id);
+        res.json(new Success(m));
     } catch (err) {
         next(err);
     }
 };
 
 module.exports = {
-    getAllUsers,
-    createUser,
-    updateUser,
-    getUserById,
-    deleteUser
+    getAllMovies,
+    createMovie,
+    updateMovie,
+    getMovieById,
+    deleteMovie
 }

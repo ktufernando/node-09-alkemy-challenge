@@ -8,18 +8,20 @@ const logger = require('../loaders/logger');
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-/*const getAllUsers = async (req, res, next) => {
+const getAllCharacters = async (req, res, next) => {
     try {
 
         logger.info('Query: ' + JSON.stringify(req.query));
 
-        const users = await userService.findAll(req.query.filter, req.query.options);
-        res.json(new Success(users));
+        const {filter = '', options = ''} = req.query;
+
+        const characters = await characterService.findAll(filter, options);
+        res.json(new Success(characters));
         
     } catch (err) {
         next(err);
     }
-};*/
+};
 
 /**
  * 
@@ -60,34 +62,34 @@ const updateCharacter = async (req, res, next) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-/*const getById = async (req, res) => {
+const getCharacterById = async (req, res) => {
     try {
-        const user = await userService.findById(req.params.id);
-        res.json(new Success(user));
+        const c = await characterService.findById(req.params.id);
+        res.json(new Success(c));
     } catch (err) {
         next(err);
     }
-};*/
+};
 
 /**
  * 
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-/*const deleteUser = async (req, res, next) => {
+const deleteCharacter = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await userService.remove(id);
-        res.json(new Success(user));
+        const c = await characterService.remove(id);
+        res.json(new Success(c));
     } catch (err) {
         next(err);
     }
-};*/
+};
 
 module.exports = {
-    //getAllUsers,
+    getAllCharacters,
     createCharacter,
     updateCharacter,
-    //getById,
-    //deleteUser
+    getCharacterById,
+    deleteCharacter
 }

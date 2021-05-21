@@ -3,7 +3,7 @@ const {
     getAllUsers, 
     createUser, 
     updateUser, 
-    getById, 
+    getUserById, 
     deleteUser
 } = require('../controllers/users');
 const { 
@@ -20,7 +20,7 @@ const router = Router();
 router.get('/', getAllRequestValidation, getAllUsers);
 router.post('/', postRequestValidations, createUser);
 router.put('/:id(\\d+)/', putRequestValidations, updateUser);
-router.get('/:id(\\d+)/', getRequestValidation, getById);
+router.get('/:id(\\d+)/', getRequestValidation, getUserById);
 router.delete('/:id(\\d+)/', deleteRequestValidations, deleteUser);
 
 module.exports = router;

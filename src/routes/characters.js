@@ -3,7 +3,7 @@ const {
     getAllCharacters, 
     createCharacter, 
     updateCharacter, 
-    getById, 
+    getCharacterById, 
     deleteCharacter
 } = require('../controllers/characters');
 const { 
@@ -17,10 +17,10 @@ const {
 
 const router = Router();
 
-//router.get('/', getAllRequestValidation, getAllCharacters);
+router.get('/', getAllRequestValidation, getAllCharacters);
 router.post('/', postRequestValidations, createCharacter);
 router.put('/:id(\\d+)/', putRequestValidations, updateCharacter);
-//router.get('/:id(\\d+)/', getRequestValidation, getById);
-//router.delete('/:id(\\d+)/', deleteRequestValidations, deleteCharacter);
+router.get('/:id(\\d+)/', getRequestValidation, getCharacterById);
+router.delete('/:id(\\d+)/', deleteRequestValidations, deleteCharacter);
 
 module.exports = router;

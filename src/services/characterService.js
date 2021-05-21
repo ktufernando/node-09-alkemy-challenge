@@ -10,10 +10,8 @@ const findByName = async(name) => {
 }
 
 
-//FIXME: Implementar los filtros
 const findAll = async(filter, options) => {
-    //return await repository.findAllWithPagination(filter, options);
-    return await repository.findAll();
+    return await repository.findAll(filter, options);
 }
 
 

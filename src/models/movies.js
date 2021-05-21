@@ -5,7 +5,7 @@ const Movie = sequelize.define('Movie', {
   // Model attributes are defined here
   image: {
     type: DataTypes.STRING(250),
-    allowNull: false
+    allowNull: true
   },
   title: {
     type: DataTypes.STRING(250),
@@ -18,7 +18,7 @@ const Movie = sequelize.define('Movie', {
   },
   calification: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   }
 }, {
 
