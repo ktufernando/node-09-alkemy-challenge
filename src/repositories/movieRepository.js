@@ -24,8 +24,6 @@ class MovieRepository {
             }
         }
         if (creationDate) {
-            creationDate = parseISO(creationDate);
-            creationDate.setHours(-3);
             where.creationDate = {
                 [Op.eq]: creationDate
             }

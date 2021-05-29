@@ -27,7 +27,10 @@ class CharacterRepository {
             }
         }
 
-        return await Character.findAll({where});
+        return await Character.findAll({
+            where,
+            attributes: ['name', 'image'],
+        });
     }
 
     async findById(id) {

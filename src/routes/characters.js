@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const multer  = require('multer');
-const upload = multer();
+
+
 const {
     getAllCharacters, 
     createCharacter, 
@@ -14,7 +14,8 @@ const {
     putRequestValidations,
     getAllRequestValidation,
     getRequestValidation,
-    deleteRequestValidations
+    deleteRequestValidations,
+    postImageRequestValidations
 } = require('../middlewares/characters');
 
 
@@ -25,6 +26,6 @@ router.post('/', postRequestValidations, createCharacter);
 router.put('/:id(\\d+)/', putRequestValidations, updateCharacter);
 router.get('/:id(\\d+)/', getRequestValidation, getCharacterById);
 router.delete('/:id(\\d+)/', deleteRequestValidations, deleteCharacter);
-router.post('/image', upload.single('image'), uploadCharacterImage);
+router.post('/image', postImageRequestValidations, uploadCharacterImage);
 
 module.exports = router;

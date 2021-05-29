@@ -27,11 +27,26 @@ class ImageRepository {
                 if (err) {
                     reject(new AppError(err.message, 502));
                 }
-                
-                //TODO: 1. armar url de descarga de imagen y retornarla 
-                //- 2 actualizar la tabla de personaje o pelicula (En otra capa)
-                console.log(`####### Image location: ${data.location}`);
                 resolve(`https://${config.aws.s3BucketName}.s3.amazonaws.com/${Key}`);
+            });
+        })
+        
+    }
+
+    deleteImage(Key){
+        Key = Key.split('/')[3];
+        return new Promise((resolve, reject)=> {
+            const params = {
+                Bucket: config.aws.s3BucketName,
+                Key
+            };
+            console.log(params);
+            this.s3.deleteObject(params, (err, data) => {
+                if (err) {
+                    reject(new AppError(err.message, 502));
+                }
+                console.log(JSON.stringify(data));
+                resolve(true);
             });
         })
         
