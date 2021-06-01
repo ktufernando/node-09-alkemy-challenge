@@ -1739,6 +1739,85 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Asociate Movie",
+					"item": [
+						{
+							"name": "Asociate Movie - Success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is not 500\", function () {\r",
+											"    pm.response.to.not.have.status(500);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is json\", function () {\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response have correct properties\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property('data');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{basepath}}/characters/:idCharacter/movies/:idMovie",
+									"host": [
+										"{{basepath}}"
+									],
+									"path": [
+										"characters",
+										":idCharacter",
+										"movies",
+										":idMovie"
+									],
+									"variable": [
+										{
+											"key": "idCharacter",
+											"value": ""
+										},
+										{
+											"key": "idMovie",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -2514,6 +2593,377 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Asociate Character",
+					"item": [
+						{
+							"name": "Asociate Character - Success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is not 500\", function () {\r",
+											"    pm.response.to.not.have.status(500);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is json\", function () {\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response have correct properties\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property('status');\r",
+											"    pm.expect(jsonData.status).to.eql('OK');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{basepath}}/movies/:idMovie/characters/:idCharacter",
+									"host": [
+										"{{basepath}}"
+									],
+									"path": [
+										"movies",
+										":idMovie",
+										"characters",
+										":idCharacter"
+									],
+									"variable": [
+										{
+											"key": "idMovie",
+											"value": "254"
+										},
+										{
+											"key": "idCharacter",
+											"value": "24"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Images",
+			"item": [
+				{
+					"name": "Upload Character Image - Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 500\", function () {\r",
+									"    pm.response.to.not.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 750ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(750);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response have correct properties\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('data');\r",
+									"    pm.expect(jsonData.data).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Fer/Pictures/11792.jpg"
+								},
+								{
+									"key": "id",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basepath}}/characters/image",
+							"host": [
+								"{{basepath}}"
+							],
+							"path": [
+								"characters",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Movie Image - Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 500\", function () {\r",
+									"    pm.response.to.not.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 750ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(750);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response have correct properties\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('data');\r",
+									"    pm.expect(jsonData.data).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Fer/Pictures/Ktu gAMES.png"
+								},
+								{
+									"key": "id",
+									"value": "254",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basepath}}/movies/image",
+							"host": [
+								"{{basepath}}"
+							],
+							"path": [
+								"movies",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Character Image - Failure",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 500\", function () {\r",
+									"    pm.response.to.not.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response have correct properties\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.have.property('message');\r",
+									"    pm.expect(jsonData.error.message).to.be.an('string');\r",
+									"    pm.expect(jsonData.error).to.have.property('detail');\r",
+									"    pm.expect(jsonData.error.detail).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "4",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basepath}}/characters/image",
+							"host": [
+								"{{basepath}}"
+							],
+							"path": [
+								"characters",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Movie Image - Failure",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 500\", function () {\r",
+									"    pm.response.to.not.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response have correct properties\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.have.property('message');\r",
+									"    pm.expect(jsonData.error.message).to.be.an('string');\r",
+									"    pm.expect(jsonData.error).to.have.property('detail');\r",
+									"    pm.expect(jsonData.error.detail).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "4",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basepath}}/movies/image",
+							"host": [
+								"{{basepath}}"
+							],
+							"path": [
+								"movies",
+								"image"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

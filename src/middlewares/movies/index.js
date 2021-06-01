@@ -1,8 +1,9 @@
 const { check } = require('express-validator');
-const multer  = require('multer');
+const multer = require('multer');
 const upload = multer();
 const AppError = require('../../errors/appError');
 const movieService = require('../../services/movieService');
+const characterService = require('../../services/characterService');
 const { ROLES, ADMIN_ROLE, USER_ROLE } = require('../../constants');
 const logger = require('../../loaders/logger');
 const { validationResult, imageRequired } = require('../commons');
@@ -13,8 +14,8 @@ const genderTypeRepository = new GenderTypeRepository();
 const contentTypeRepository = new ContentTypeRepository();
 
 
-const _idRequied = check('id').not().isEmpty();
-const _idIsNumeric = check('id').isNumeric();
+//const _idRequied = check('id').not().isEmpty();
+//const _idIsNumeric = check('id').isNumeric();
 const _idExist = check('id').custom(
     async (id = '') => {
         const cFound = await movieService.findById(id);
@@ -64,6 +65,33 @@ const _contentTypeExistAndOptional = check('contentType').optional().custom(_con
 const _genderTypeExistAndOptional = check('genderType').optional().custom(_genderTypeExistValidation);
 
 
+const _idRequired = (name) => {
+    return check(name).not().isEmpty();
+}
+const _idIsNumeric = (name) => {
+    return check(name).isNumeric();
+}
+const _idCharacterExist = check('idCharacter').custom(
+    async (idCharacter = '', {req}) => {
+        const cFound = await characterService.findById(idCharacter);
+        if(!cFound) {
+            throw new AppError('The character id does not exist in DB', 400);
+        }
+        req.character = cFound;
+    }
+);
+
+
+const _idMovieExist = check('idMovie').custom(
+    async (idMovie = '', {req}) => {
+        const mFound = await movieService.findById(idMovie);
+        if (!mFound) {
+            throw new AppError('The movie id does not exist in DB', 400);
+        }
+        req.movie = mFound;
+    }
+);
+
 const postRequestValidations = [
     validJWT,
     hasRole(ADMIN_ROLE),
@@ -81,8 +109,8 @@ const postRequestValidations = [
 const putRequestValidations = [
     validJWT,
     hasRole(ADMIN_ROLE),
-    _idRequied,
-    _idIsNumeric,
+    _idRequired('id'),
+    _idIsNumeric('id'),
     _idExist,
     _titleOptional,
     _titleNotExist,
@@ -96,8 +124,8 @@ const putRequestValidations = [
 const deleteRequestValidations = [
     validJWT,
     hasRole(ADMIN_ROLE),
-    _idRequied,
-    _idIsNumeric,
+    _idRequired('id'),
+    _idIsNumeric('id'),
     _idExist,
     validationResult
 ]
@@ -108,8 +136,8 @@ const getAllRequestValidation = [
 
 const getRequestValidation = [
     validJWT,
-    _idRequied,
-    _idIsNumeric,
+    _idRequired('id'),
+    _idIsNumeric('id'),
     _idExist,
     validationResult
 ]
@@ -118,10 +146,22 @@ const postImageRequestValidations = [
     validJWT,
     hasRole(USER_ROLE, ADMIN_ROLE),
     upload.single('image'),
-    _idRequied,
-    _idIsNumeric,
+    _idRequired('id'),
+    _idIsNumeric('id'),
     _idExist,
     imageRequired,
+    validationResult
+]
+
+const asociationRequestValidations = [
+    validJWT,
+    hasRole(ADMIN_ROLE),
+    _idRequired('idCharacter'),
+    _idIsNumeric('idCharacter'),
+    _idCharacterExist,
+    _idRequired('idMovie'),
+    _idIsNumeric('idMovie'),
+    _idMovieExist,
     validationResult
 ]
 
@@ -131,5 +171,6 @@ module.exports = {
     getAllRequestValidation,
     getRequestValidation,
     deleteRequestValidations,
-    postImageRequestValidations
+    postImageRequestValidations,
+    asociationRequestValidations
 }

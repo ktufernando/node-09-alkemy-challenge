@@ -28,18 +28,20 @@ module.exports = Movie;
 
 Movie.belongsToMany(require('./characters'), {
   through: "charactersMovies",
-  as: "character",
+  as: "characters",
   foreignKey: "movieId"
 });
 
 Movie.belongsTo(require('./contentTypes'), {
   foreignKey: 'contentTypeId',
-  targetKey: 'id'
+  targetKey: 'id',
+  as: 'type'
 });
 
 Movie.belongsTo(require('./genderTypes'), {
   foreignKey: 'genderTypeId',
-  targetKey: 'id'
+  targetKey: 'id',
+  as: 'gender'
 });
 
 

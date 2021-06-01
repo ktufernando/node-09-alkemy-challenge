@@ -4,7 +4,7 @@ const ImageRepository = require('../repositories/imageRepository');
 const imageRepository = new ImageRepository();
 
 const findById = async(id) => {
-    return await repository.findById(id);
+    return await repository.findByIdWithMovies(id);
 }
 
 const findByName = async(name) => {

@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const Character = require('../models/characters');
+const Movie = require('../models/movies');
 
 class CharacterRepository {
 
@@ -35,6 +36,17 @@ class CharacterRepository {
 
     async findById(id) {
         return await Character.findByPk(id);
+    }
+    
+    async findByIdWithMovies(id) {
+        return await Character.findByPk(id, {
+            include: [
+              {
+                model: Movie,
+                as: "movies"
+              },
+            ],
+          });
     }
     
     async findByName(name) {

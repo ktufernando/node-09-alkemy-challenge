@@ -46,8 +46,6 @@ const _idExist = check('id').custom(
     }
 );
 
-
-
 const postRequestValidations = [
     validJWT,
     hasRole(ADMIN_ROLE),
