@@ -50,8 +50,8 @@ class MovieRepository {
         return await Movie.findByPk(id, {
             include: [
               'characters',
-              'gender',
-              'type'
+              'genderType',
+              'contentType'
             ],
             attributes: ['id', 'title', 'image', 'creationDate', 'calification']
           });
